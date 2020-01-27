@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import index
+from .views import TodoView
 
 urlpatterns = [
-    path('', index, name="todos-index"),
+    path('', TodoView.as_view(), name="todos-index"),
 ]
