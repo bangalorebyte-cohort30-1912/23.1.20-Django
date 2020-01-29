@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django: Todo Aplication</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <h1 class="d-flex justify-content-center m-5"> Welcome to Todo Application in Django</h1>
+
+    <form action="/todos/" class="d-flex justify-content-center" method="POST">
+        {% csrf_token %}
+        <div class="form-group col-md-8">
+            <div class="input-group-prepend">
+                <label for="colFormLabel" class="col-sm-3 col-form-label">Enter todo Item</label>
+                <input type="text" class="form-control" name="todotext" placeholder="Enter todo">
+                <input type='submit'>
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Item No</th>
+                <th scope="col">Id</th>
+                <th scope="col">Item Text</th>
+                <th scope="col">is Completed ?</th>
+            </tr>
+        </thead>
+        <tbody>            
+            {%if todos%}
+                {%for todo in todos%}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td> {{ todo.id }}</td>
+                    <td><a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#darkModalForm{{todo.id}}">{{ todo.todo_text }}</a></td>
+                    <td>{% if todo.is_complete == True %}
+                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        {% elif todo.is_complete == False %}
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        {% endif %}</td>
+                </tr>
+                <form action="/todos/" class="d-flex justify-content-center" method="POST">
+                    {% csrf_token %}
+                        <div class="modal fade" id="darkModalForm{{todo.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">EDIT ITEMS TO TO-LIST</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          
+                        </button>
+                      </div>
+                      <div class="form-group col-md-8">
+                        <div class="input-group-prepend">
+                            <div>
+                            <label>Enter ID : {{ todo.id }}</label>
+                            <input type="number" class="form-control" name="id"  value= {{ todo.id }}>
+                            </div>
+                            <div>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label">Enter todo Item : </label>
+                            <input type="text" class="form-control" name="text" placeholder="name">
+                            </div>
+                            <input type='submit'>
+                        </div>
+                    </div>
+                
+                
+                
+                      </div>
+                      <div class="modal-footer d-flex justify-content-center">
+                        <button class="btn btn-default">SAVE CHANGES</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                
+                    </form>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+
+    
+
+
+    
+    
+
+    
+
+
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>    
+</body>
+</html>
+
+<!-- Modal -->
